@@ -38,18 +38,25 @@ class AdminFirstPageView extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const TopContainer(
+                    TopContainer(
                       title: 'Jumlah Area',
-                      value: '10 Area',
+                      value: '${model.jumlahArea} Area',
                       icon: Icons.place_outlined,
                       background: warningColor,
                     ),
                     const SizedBox(height: 10),
-                    const TopContainer(
+                    TopContainer(
                       title: 'Jumlah Caleg',
-                      value: '10 Caleg',
+                      value: '${model.jumlahCaleg} Caleg',
                       icon: Icons.co_present_outlined,
                       background: greenColor,
+                    ),
+                    const SizedBox(height: 10),
+                    TopContainer(
+                      title: 'Tim Survei',
+                      value: '${model.jumlahTimSurvei} Tim Survei',
+                      icon: Icons.co_present_outlined,
+                      background: orangeColor,
                     ),
                     const SizedBox(height: 10),
                     const TopContainer(
@@ -61,55 +68,109 @@ class AdminFirstPageView extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    RichText(
-                      text: TextSpan(
-                        text: 'Selamat Datang, ',
-                        style: regularTextStyle,
-                        children: [
-                          const TextSpan(
-                            text: 'Admin\n',
-                            style: boldTextStyle,
-                          ),
-                          const TextSpan(
-                            text: 'Silahkan tambahkan data ',
-                            style: regularTextStyle,
-                          ),
-                          TextSpan(
-                            text: 'Area ',
-                            style: boldTextStyle.copyWith(
-                              color: greenColor,
-                              fontStyle: FontStyle.italic,
+                    if (model.isBusy)
+                      const Center(child: CircularProgressIndicator()),
+                    if (!model.isBusy && model.status == true)
+                      RichText(
+                        text: TextSpan(
+                          text: 'Selamat Datang, ',
+                          style: regularTextStyle,
+                          children: [
+                            const TextSpan(
+                              text: 'Admin\n',
+                              style: boldTextStyle,
                             ),
-                          ),
-                          const TextSpan(
-                            text: 'terlebih dahulu sebelum menambahkan data ',
-                            style: regularTextStyle,
-                          ),
-                          TextSpan(
-                            text: 'Caleg',
-                            style: boldTextStyle.copyWith(
-                              color: greenColor,
-                              fontStyle: FontStyle.italic,
+                            const TextSpan(
+                              text: 'Silahkan tambahkan data ',
+                              style: regularTextStyle,
                             ),
-                          ),
-                          const TextSpan(
-                            text:
-                                '.\n\nData Pemilih akan diambil dari data yang dimasukkan oleh tim survei\n\n',
-                            style: regularTextStyle,
-                          ),
-                          const TextSpan(
-                            text:
-                                'Jika terjadi kesalahan pada data, silahkan hubungi ',
-                            style: regularTextStyle,
-                          ),
-                        ],
+                            TextSpan(
+                              text: 'Area ',
+                              style: boldTextStyle.copyWith(
+                                color: greenColor,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                            const TextSpan(
+                              text: 'terlebih dahulu sebelum menambahkan data ',
+                              style: regularTextStyle,
+                            ),
+                            TextSpan(
+                              text: 'Caleg',
+                              style: boldTextStyle.copyWith(
+                                color: greenColor,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                            const TextSpan(
+                              text:
+                                  '.\n\nData Pemilih akan diambil dari data yang dimasukkan oleh tim survei\n\n',
+                              style: regularTextStyle,
+                            ),
+                            const TextSpan(
+                              text:
+                                  'Jika terjadi kesalahan pada data, silahkan hubungi ',
+                              style: regularTextStyle,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
+                    if (!model.isBusy && model.status == false)
+                      RichText(
+                        text: TextSpan(
+                          text: 'Selamat Datang, ',
+                          style: regularTextStyle,
+                          children: [
+                            const TextSpan(
+                              text: 'Admin\n',
+                              style: boldTextStyle,
+                            ),
+                            const TextSpan(
+                              text: 'Terjadi ',
+                              style: regularTextStyle,
+                            ),
+                            TextSpan(
+                              text: 'Error ',
+                              style: boldTextStyle.copyWith(
+                                color: redColor,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                            const TextSpan(
+                              text: 'pada saat mengambil data\n',
+                              style: regularTextStyle,
+                            ),
+                            const TextSpan(
+                              text: 'Silahkan coba lagi dengan menekan icon',
+                              style: regularTextStyle,
+                            ),
+                            TextSpan(
+                              text: ' Pengaturan\n',
+                              style: boldTextStyle.copyWith(
+                                color: greenColor,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                            const TextSpan(
+                              text: 'di pojok kanan bawah\n',
+                              style: regularTextStyle,
+                            ),
+                          ],
+                        ),
+                      ),
                   ],
                 ),
               ),
             ),
           ),
+          // with setting icon
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              // model.gotoSetting();
+            },
+            child: const Icon(Icons.settings),
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
         );
       },
     );

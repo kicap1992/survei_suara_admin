@@ -13,6 +13,7 @@ class HalamanAreaViewModel extends CustomBaseViewModel {
   // variabel
   List<AreaModel> listAreaModel = [];
   int jumlahArea = 0;
+  bool status = false;
 
   // add area form
   final formKey = GlobalKey<FormState>();
@@ -38,7 +39,9 @@ class HalamanAreaViewModel extends CustomBaseViewModel {
 
       log.i('listAreaModel: $listAreaModel');
       log.i('jumlahArea: $jumlahArea');
+      status = true;
     } catch (e) {
+      status = false;
       log.e(e);
     } finally {
       globalVar.backPressed = 'exitApp';

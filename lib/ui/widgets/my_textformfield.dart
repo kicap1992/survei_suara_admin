@@ -15,6 +15,10 @@ class MyTextFormField extends StatelessWidget {
     this.controller,
     this.maxLines = 1,
     this.onEditingComplete,
+    this.keyboardType = TextInputType.text,
+    this.initialValue,
+    this.readOnly = false,
+    this.maxLength,
   }) : super(key: key);
 
   final String? labelText;
@@ -27,15 +31,23 @@ class MyTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final int maxLines;
   final VoidCallback? onEditingComplete;
+  final TextInputType keyboardType;
+  final String? initialValue;
+  final bool readOnly;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLength: maxLength,
+      readOnly: readOnly,
+      initialValue: initialValue,
       onEditingComplete: onEditingComplete,
       maxLines: maxLines,
       controller: controller,
       focusNode: focusNode,
       obscureText: obscureText ?? false,
+      keyboardType: keyboardType,
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,

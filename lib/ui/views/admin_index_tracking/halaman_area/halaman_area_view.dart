@@ -92,9 +92,13 @@ class HalamanAreaView extends StatelessWidget {
                                     child: Column(
                                       children: [
                                         if (model.jumlahArea == 0)
-                                          const Center(
-                                              child: Text(
-                                                  'Belum ada area diinput')),
+                                          Center(
+                                            child: model.status == true
+                                                ? const Text(
+                                                    'Belum ada area diinput')
+                                                : const Text(
+                                                    'Gagal mengambil data'),
+                                          ),
                                         if (model.jumlahArea > 0)
                                           for (var i = 0;
                                               i < model.jumlahArea;

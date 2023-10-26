@@ -6,6 +6,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../services/global_var.dart';
 import '../../services/http_services.dart';
 import '../../services/my_easyloading.dart';
+import '../../services/other_function.dart';
 import '../app.locator.dart';
 import '../themes/app_colors.dart';
 
@@ -17,6 +18,7 @@ class CustomBaseViewModel extends BaseViewModel {
   final easyLoading = locator<MyEasyLoading>();
   final httpService = locator<MyHttpServices>();
   final globalVar = locator<GlobalVar>();
+  final myFunction = locator<MyFunction>();
 
   void back() {
     navigationService.back();

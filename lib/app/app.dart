@@ -4,12 +4,14 @@ import 'package:stacked/stacked_annotations.dart';
 import '../services/global_var.dart';
 import '../services/http_services.dart';
 import '../services/my_easyloading.dart';
+import '../services/other_function.dart';
 import '../ui/views/admin_index_tracking/admin_first_page/admin_first_page_view.dart';
 import '../ui/views/admin_index_tracking/admin_index_tracking_view.dart';
 import '../ui/views/admin_index_tracking/halaman_area/halaman_area_view.dart';
 import '../ui/views/admin_index_tracking/halaman_caleg/halaman_caleg_view.dart';
 import '../ui/views/admin_index_tracking/halaman_caleg/tambah_edit_caleg/tambah_edit_caleg_view.dart';
 import '../ui/views/admin_index_tracking/halaman_pengaturan/halaman_pengaturan_view.dart';
+import '../ui/views/admin_index_tracking/tim_survei/tambah_detail_tim_survei/tambah_detail_tim_survei_view.dart';
 import '../ui/views/admin_index_tracking/tim_survei/tim_survei_view.dart';
 import '../ui/views/login_screen/login_screen_view.dart';
 import '../ui/views/splash_screen/splash_screen_view.dart';
@@ -42,6 +44,7 @@ import '../ui/views/splash_screen/splash_screen_view.dart';
   ],
   dialogs: [
     StackedDialog(classType: TambahEditCalegView),
+    StackedDialog(classType: TambahDetailTimSurveiView)
   ],
   dependencies: [
     LazySingleton(classType: NavigationService),
@@ -54,6 +57,7 @@ import '../ui/views/splash_screen/splash_screen_view.dart';
     LazySingleton(classType: MyEasyLoading),
     LazySingleton(classType: MyHttpServices),
     LazySingleton(classType: GlobalVar),
+    LazySingleton(classType: MyFunction),
   ],
   logger: StackedLogger(),
 )

@@ -11,6 +11,7 @@ import '../../../../../app/core/custom_base_view_model.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../../model/area_model.dart';
+import '../../../../../model/caleg_model.dart';
 import '../../../../../model/my_response.model.dart';
 
 class TambahEditCalegViewModel extends CustomBaseViewModel {
@@ -24,6 +25,7 @@ class TambahEditCalegViewModel extends CustomBaseViewModel {
   final formKey = GlobalKey<FormState>();
   TextEditingController namaController = TextEditingController();
   TextEditingController cariAreaController = TextEditingController();
+  TextEditingController nomorUrutController = TextEditingController();
   List<int> listAreaId = [];
 
   // image picker
@@ -32,9 +34,49 @@ class TambahEditCalegViewModel extends CustomBaseViewModel {
   XFile? imageFile;
   Uint8List? imageBytes;
 
-  Future<void> init() async {
+  CalegModel? calegModel;
+
+  Future<void> init(data) async {
     globalVar.backPressed = 'exitApp';
     await getData();
+    calegModel = data;
+    if (calegModel != null) {
+      namaController.text = calegModel!.namaCaleg!;
+      nomorUrutController.text = calegModel!.nomorUrutCaleg!.toString();
+      getAreaList(calegModel!.idCaleg!);
+      // listAreaId = calegModel!.area!.map((e) => e.id!).toList();
+    }
+    log.i(data);
+  }
+
+  getAreaList(int idCaleg) async {
+    log.i('getAreaList');
+    setBusy(true);
+    globalVar.backPressed = 'cantBack';
+    try {
+      var response = await httpService.get('caleg/relasi_area/$idCaleg');
+      log.i(response.data);
+      MyResponseModel myResponseModel = MyResponseModel.fromJson(response.data);
+      var data = myResponseModel.data['area'];
+      for (var item in data) {
+        listAreaId.add(item['id_area']);
+      }
+      listAreaModel = [];
+      for (var item in allListAreaModel) {
+        if (listAreaId.contains(item.idArea)) {
+          listAreaModel.add(item);
+        }
+      }
+
+      log.i('listAreaModel: $listAreaModel');
+
+      // log.i('jumlahArea: $jumlahArea');
+    } catch (e) {
+      log.e(e);
+    } finally {
+      globalVar.backPressed = 'exitApp';
+      setBusy(false);
+    }
   }
 
   getData() async {
@@ -105,61 +147,47 @@ class TambahEditCalegViewModel extends CustomBaseViewModel {
     notifyListeners();
   }
 
-  addCaleg() async {
-    dialogService
-        .showDialog(
-      title: 'Tambah Caleg',
-      description:
-          'Apakah anda yakin ingin menambahkan Caleg ${namaController.text}?',
-      buttonTitle: 'Ya',
-      cancelTitle: 'Tidak',
-    )
-        .then((value) async {
-      if (value!.confirmed) {
-        log.i('addCaleg');
-        setBusy(true);
-        globalVar.backPressed = 'cantBack';
-        easyLoading.customLoading('Tambah Caleg..');
+  Future<bool> addCaleg() async {
+    log.i('addCaleg');
+    setBusy(true);
+    globalVar.backPressed = 'cantBack';
+    easyLoading.customLoading('Tambah Caleg..');
 
-        var formData = FormData.fromMap({
-          'nama': namaController.text,
-          'area': const JsonEncoder().convert(listAreaId),
-          'foto': await MultipartFile.fromFile(
-            imageFile!.path,
-            filename: imageFile!.name,
-            contentType: MediaType('image', 'jpeg'),
-          )
-        });
-
-        try {
-          var response = await httpService.postWithFormData('caleg', formData);
-          log.i(response.data);
-          await getData();
-
-          navigationService.back();
-          // navigationService.back();
-          snackbarService.showSnackbar(
-            message: 'Berhasil menambahkan Caleg',
-            duration: const Duration(seconds: 2),
-          );
-          // navigationService.popRepeated(2);
-        } catch (e) {
-          log.e(e);
-
-          // navigationService.back();
-          snackbarService.showSnackbar(
-            message: 'Gagal menambahkan Caleg, ${e.toString()}',
-            duration: const Duration(seconds: 2),
-          );
-        } finally {
-          easyLoading.dismissLoading();
-          globalVar.backPressed = 'exitApp';
-          setBusy(false);
-          // navigationService.back();
-          // Navigator.of(context!).pop();
-          // remove all dialog
-        }
-      }
+    var formData = FormData.fromMap({
+      'nama': namaController.text,
+      'nomor_urut': nomorUrutController.text,
+      'area': const JsonEncoder().convert(listAreaId),
+      'foto': await MultipartFile.fromFile(
+        imageFile!.path,
+        filename: imageFile!.name,
+        contentType: MediaType('image', 'jpeg'),
+      )
     });
+
+    try {
+      var response = await httpService.postWithFormData('caleg', formData);
+      log.i(response.data);
+      // await getData();
+
+      // navigationService.back();
+      // navigationService.back();
+      // snackbarService.showSnackbar(
+      //   message: 'Berhasil menambahkan Caleg',
+      //   duration: const Duration(seconds: 2),
+      // );
+      // completer(DialogResponse(confirmed: true));
+      return true;
+      // navigationService.popRepeated(2);
+    } catch (e) {
+      log.e(e);
+      return false;
+    } finally {
+      easyLoading.dismissLoading();
+      globalVar.backPressed = 'exitApp';
+      setBusy(false);
+      // navigationService.back();
+      // Navigator.of(context!).pop();
+      // remove all dialog
+    }
   }
 }

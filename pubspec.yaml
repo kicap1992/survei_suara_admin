@@ -50,6 +50,7 @@ dependencies:
   stylish_bottom_bar:
   validatorless: ^1.2.3
   http_parser:
+  intl:
 
 
 dev_dependencies:

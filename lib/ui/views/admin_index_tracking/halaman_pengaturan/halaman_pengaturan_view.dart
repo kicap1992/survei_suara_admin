@@ -1,3 +1,4 @@
+import 'package:cek_suara/ui/views/admin_index_tracking/admin_first_page/admin_first_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -28,11 +29,7 @@ class HalamanPengaturanView extends StatelessWidget {
               }
               return false;
             },
-            child: const Center(
-              child: Text(
-                'HalamanPengaturanView',
-              ),
-            ),
+            child: const AdminFirstPageView(),
           ),
         );
       },
