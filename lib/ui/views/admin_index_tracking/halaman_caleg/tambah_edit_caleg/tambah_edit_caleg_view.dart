@@ -217,7 +217,8 @@ class TambahEditCalegView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    if (model.calegModel == null)
+                    if (model.calegModel == null &&
+                        request.title == 'Tambah Caleg')
                       SizedBox(
                         width: 250,
                         child: MyButton(
@@ -291,13 +292,15 @@ class TambahEditCalegView extends StatelessWidget {
                             width: 50,
                             height: 50,
                             decoration: BoxDecoration(
-                              color: mainColor.withOpacity(0.5),
+                              color: mainColor,
                               borderRadius: BorderRadius.circular(50),
                             ),
                             child: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                model.checkSuara(model.calegModel!);
+                              },
                               icon: const Icon(
-                                Icons.info,
+                                Icons.list_alt,
                                 color: Colors.white,
                               ),
                             ),

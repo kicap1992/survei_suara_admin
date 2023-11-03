@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
 
+import '../../../../../app/app.bottomsheets.dart';
 import '../../../../../app/app.logger.dart';
 import '../../../../../app/core/custom_base_view_model.dart';
 
@@ -189,5 +190,18 @@ class TambahEditCalegViewModel extends CustomBaseViewModel {
       // Navigator.of(context!).pop();
       // remove all dialog
     }
+  }
+
+  checkSuara(CalegModel calegModel) async {
+    log.i('calegModel: ${calegModel.toJson()}');
+    await bottomSheetService.showCustomSheet(
+      data: calegModel.idCaleg,
+      barrierDismissible: true,
+      isScrollControlled: true,
+      title: 'Detail Suara Caleg ${calegModel.namaCaleg}',
+      description: 'Caleg',
+      ignoreSafeArea: false,
+      variant: BottomSheetType.detailSuaraBottomSheetView,
+    );
   }
 }

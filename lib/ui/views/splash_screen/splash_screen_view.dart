@@ -20,67 +20,69 @@ class SplashScreenView extends StatelessWidget {
         SplashScreenViewModel model,
         Widget? child,
       ) {
-        return Scaffold(
-          backgroundColor: warningColor,
-          body: Center(
-            child: Column(
-              children: [
-                const Expanded(
-                  flex: 1,
-                  child: SizedBox(
-                    height: 100,
+        return SafeArea(
+          child: Scaffold(
+            backgroundColor: warningColor,
+            body: Center(
+              child: Column(
+                children: [
+                  const Expanded(
+                    flex: 1,
+                    child: SizedBox(
+                      height: 100,
+                    ),
                   ),
-                ),
-                Image.asset(
-                  'assets/logo.png',
-                  width: 200,
-                  height: 200,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'SISTEM CEK SUARA',
-                  style: boldTextStyle.copyWith(
-                    // color: backgroundColor,
-                    fontSize: 20,
+                  Image.asset(
+                    'assets/logo.png',
+                    width: 200,
+                    height: 200,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  '(Admin App)',
-                  style: boldTextStyle.copyWith(
-                    // color: backgroundColor,
-                    fontStyle: FontStyle.italic,
+                  const SizedBox(
+                    height: 10,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-                const Expanded(child: SizedBox()),
-                Text(
-                  'Created By',
-                  style: regularTextStyle.copyWith(
-                    fontSize: 12,
+                  Text(
+                    'SISTEM CEK SUARA',
+                    style: boldTextStyle.copyWith(
+                      // color: backgroundColor,
+                      fontSize: 20,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  'Kicap Karan',
-                  style: boldTextStyle.copyWith(
-                    fontSize: 13,
-                    fontStyle: FontStyle.italic,
+                  Text(
+                    '(Admin App)',
+                    style: boldTextStyle.copyWith(
+                      // color: backgroundColor,
+                      fontStyle: FontStyle.italic,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  'www.kicap-karan.com',
-                  style: boldTextStyle.copyWith(
-                    fontSize: 13,
+                  const Expanded(child: SizedBox()),
+                  Text(
+                    'Created By',
+                    style: regularTextStyle.copyWith(
+                      fontSize: 12,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                )
-              ],
+                  Text(
+                    'Kicap Karan',
+                    style: boldTextStyle.copyWith(
+                      fontSize: 13,
+                      fontStyle: FontStyle.italic,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    'www.kicap-karan.com',
+                    style: boldTextStyle.copyWith(
+                      fontSize: 13,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  )
+                ],
+              ),
             ),
           ),
         );

@@ -24,45 +24,47 @@ class AdminIndexTrackingView extends StatelessWidget {
         AdminIndexTrackingViewModel model,
         Widget? child,
       ) {
-        return Scaffold(
-          extendBody: false,
-          body: ExtendedNavigator(
-            router: AdminIndexTrackingViewRouter(),
-            navigatorKey: StackedService.nestedNavigationKey(2),
-          ),
-          bottomNavigationBar: StylishBottomBar(
-            items: [
-              for (var item in model.bottomNavBarList)
-                BottomBarItem(
-                  icon: Icon(item['icon'],
-                      color: model.currentIndex ==
-                              model.bottomNavBarList.indexOf(item)
-                          ? warningColor
-                          : fontColor),
-                  title: Text(
-                    item['name'],
-                    style: regularTextStyle.copyWith(
-                      color: model.currentIndex ==
-                              model.bottomNavBarList.indexOf(item)
-                          ? warningColor
-                          : fontColor,
+        return SafeArea(
+          child: Scaffold(
+            extendBody: false,
+            body: ExtendedNavigator(
+              router: AdminIndexTrackingViewRouter(),
+              navigatorKey: StackedService.nestedNavigationKey(2),
+            ),
+            bottomNavigationBar: StylishBottomBar(
+              items: [
+                for (var item in model.bottomNavBarList)
+                  BottomBarItem(
+                    icon: Icon(item['icon'],
+                        color: model.currentIndex ==
+                                model.bottomNavBarList.indexOf(item)
+                            ? warningColor
+                            : fontColor),
+                    title: Text(
+                      item['name'],
+                      style: regularTextStyle.copyWith(
+                        color: model.currentIndex ==
+                                model.bottomNavBarList.indexOf(item)
+                            ? warningColor
+                            : fontColor,
+                      ),
+                      // textAlign: TextAlign.l,
                     ),
-                    // textAlign: TextAlign.l,
+                    backgroundColor: model.currentIndex ==
+                            model.bottomNavBarList.indexOf(item)
+                        ? fontColor
+                        : fontColor,
                   ),
-                  backgroundColor:
-                      model.currentIndex == model.bottomNavBarList.indexOf(item)
-                          ? fontColor
-                          : fontColor,
-                ),
-            ],
-            currentIndex: model.currentIndex,
-            option: BubbleBarOptions(),
-            hasNotch: true,
-            backgroundColor: warningColor,
-            onTap: (value) {
-              model.handleNavigation(value);
-            },
-            // fabLocation: StylishBarFabLocation.center,
+              ],
+              currentIndex: model.currentIndex,
+              option: BubbleBarOptions(),
+              hasNotch: true,
+              backgroundColor: warningColor,
+              onTap: (value) {
+                model.handleNavigation(value);
+              },
+              // fabLocation: StylishBarFabLocation.center,
+            ),
           ),
         );
       },

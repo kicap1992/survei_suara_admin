@@ -55,79 +55,84 @@ class HalamanCalegView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                           color: warningColor,
                         ),
-                        child: Column(
-                          // mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: model.isBusy
-                              ? MainAxisAlignment.center
-                              : (model.listCalegModel.isNotEmpty
-                                  ? MainAxisAlignment.start
-                                  : MainAxisAlignment.center),
-                          children: [
-                            if (model.isBusy)
-                              const LinearProgressIndicator(
-                                minHeight: 5,
-                                color: mainColor,
-                              ),
-                            if (!model.isBusy &&
-                                model.listCalegModel.isNotEmpty)
-                              SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    for (var i = 0; i < model.jumlahCaleg; i++)
-                                      Card(
-                                        child: ListTile(
-                                          leading: Text('${i + 1}'),
-                                          title: Text(
-                                            model.listCalegModel[i].namaCaleg!,
-                                            style: boldTextStyle,
-                                          ),
-                                          subtitle: Text(
-                                            'No. Urut: ${model.listCalegModel[i].nomorUrutCaleg!}',
-                                            style: italicTextStyle,
-                                          ),
-                                          trailing: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              IconButton(
-                                                icon: const Icon(
-                                                  Icons.info_outline,
-                                                  color: mainColor,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            // mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: model.isBusy
+                                ? MainAxisAlignment.center
+                                : (model.listCalegModel.isNotEmpty
+                                    ? MainAxisAlignment.start
+                                    : MainAxisAlignment.center),
+                            children: [
+                              if (model.isBusy)
+                                const LinearProgressIndicator(
+                                  minHeight: 5,
+                                  color: mainColor,
+                                ),
+                              if (!model.isBusy &&
+                                  model.listCalegModel.isNotEmpty)
+                                SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      for (var i = 0;
+                                          i < model.jumlahCaleg;
+                                          i++)
+                                        Card(
+                                          child: ListTile(
+                                            leading: Text('${i + 1}'),
+                                            title: Text(
+                                              model
+                                                  .listCalegModel[i].namaCaleg!,
+                                              style: boldTextStyle,
+                                            ),
+                                            subtitle: Text(
+                                              'No. Urut: ${model.listCalegModel[i].nomorUrutCaleg!}',
+                                              style: italicTextStyle,
+                                            ),
+                                            trailing: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                IconButton(
+                                                  icon: const Icon(
+                                                    Icons.info_outline,
+                                                    color: mainColor,
+                                                  ),
+                                                  onPressed: () {
+                                                    model.showDetailCaleg(model
+                                                        .listCalegModel[i]);
+                                                  },
                                                 ),
-                                                onPressed: () {
-                                                  model.showDetailCaleg(
-                                                      model.listCalegModel[i]);
-                                                },
-                                              ),
-                                              IconButton(
-                                                icon: const Icon(
-                                                  // trash
-                                                  Icons.delete_outline,
-                                                  color: dangerColor,
+                                                IconButton(
+                                                  icon: const Icon(
+                                                    // trash
+                                                    Icons.delete_outline,
+                                                    color: dangerColor,
+                                                  ),
+                                                  onPressed: () {
+                                                    model.deleteCaleg(model
+                                                        .listCalegModel[i]);
+                                                  },
                                                 ),
-                                                onPressed: () {
-                                                  model.deleteCaleg(
-                                                      model.listCalegModel[i]);
-                                                },
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            if (!model.isBusy && model.listCalegModel.isEmpty)
-                              Center(
-                                child: Text(
-                                  model.status == true
-                                      ? 'Tidak ada data caleg diinput sebelumnya'
-                                      : 'Gagal mengambil data caleg',
-                                  style: italicTextStyle,
-                                  textAlign: TextAlign.center,
+                              if (!model.isBusy && model.listCalegModel.isEmpty)
+                                Center(
+                                  child: Text(
+                                    model.status == true
+                                        ? 'Tidak ada data caleg diinput sebelumnya'
+                                        : 'Gagal mengambil data caleg',
+                                    style: italicTextStyle,
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
-                              ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),

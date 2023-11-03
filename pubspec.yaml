@@ -51,6 +51,7 @@ dependencies:
   validatorless: ^1.2.3
   http_parser:
   intl:
+  easy_image_viewer: 
 
 
 dev_dependencies:
