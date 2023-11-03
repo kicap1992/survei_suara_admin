@@ -42,10 +42,10 @@ dependencies:
   path_provider: ^2.0.9
   dio:
   flutter_easyloading:
-  location: ^4.4.0
+  # location: ^4.4.0
   # flutter_inappwebview:
   # webview_flutter: ^3.0.4
-  google_fonts:
+  # google_fonts:
   # flutter_svg:
   stylish_bottom_bar:
   validatorless: ^1.2.3

@@ -1,9 +1,10 @@
-import 'package:cek_suara/model/tim_survei_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../app/app.logger.dart';
 import '../../../../../app/core/custom_base_view_model.dart';
+import '../../../../../model/caleg_model.dart';
+import '../../../../../model/tim_survei_model.dart';
 
 class TambahDetailTimSurveiViewModel extends CustomBaseViewModel {
   final log = getLogger('TambahDetailTimSurveiViewModel');
@@ -12,8 +13,15 @@ class TambahDetailTimSurveiViewModel extends CustomBaseViewModel {
   final formKey = GlobalKey<FormState>();
   TextEditingController nikController = TextEditingController();
   TextEditingController namaController = TextEditingController();
+  TextEditingController namaCalegController = TextEditingController();
 
   TimSurveiModel? timSurveiModel;
+
+  // list caleg
+  List<CalegModel> listCalegModel = [];
+  List<String> listCalegString = [];
+  String? selectedCaleg;
+  int? selectedCalegId;
 
   Future<void> init(data) async {
     globalVar.backPressed = 'exitApp';
@@ -21,6 +29,29 @@ class TambahDetailTimSurveiViewModel extends CustomBaseViewModel {
     if (timSurveiModel != null) {
       nikController.text = timSurveiModel!.nik!;
       namaController.text = timSurveiModel!.nama!;
+      namaCalegController.text = timSurveiModel!.namaCaleg!;
+    } else {
+      await getData();
+    }
+  }
+
+  getData() async {
+    setBusy(true);
+    try {
+      var response = await httpService.get('caleg');
+      // log.i(response.data);
+      CalegListModel calegListModel =
+          CalegListModel.fromJson(response.data['data']);
+      listCalegModel = calegListModel.caleg!;
+      for (var element in listCalegModel) {
+        listCalegString.add(element.namaCaleg!);
+      }
+      selectedCaleg = listCalegString[0];
+      selectedCalegId = listCalegModel[0].idCaleg;
+    } catch (e) {
+      log.e(e);
+    } finally {
+      setBusy(false);
     }
   }
 
@@ -33,6 +64,7 @@ class TambahDetailTimSurveiViewModel extends CustomBaseViewModel {
       var formData = FormData.fromMap({
         'nik': nikController.text,
         'nama': namaController.text,
+        'id_caleg': selectedCalegId,
       });
       var response = await httpService.postWithFormData('survei', formData);
       log.i(response.data);

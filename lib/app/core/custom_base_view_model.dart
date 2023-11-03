@@ -25,7 +25,7 @@ class CustomBaseViewModel extends BaseViewModel {
   }
 
   quitApp(BuildContext context) {
-    globalVar.backPressed = 'cantBack';
+    // globalVar.backPressed = 'cantBack';
     showDialog(
       context: context,
       builder: (BuildContext context) {

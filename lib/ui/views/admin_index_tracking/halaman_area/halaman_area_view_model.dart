@@ -63,6 +63,8 @@ class HalamanAreaViewModel extends CustomBaseViewModel {
       var response = await httpService.postWithFormData('area', formData);
       log.i(response.data);
       await getData();
+      // reset form
+      namaAreaController.clear();
       return true;
     } catch (e) {
       log.e(e);

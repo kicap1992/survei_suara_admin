@@ -1,5 +1,6 @@
 import 'package:cek_suara/app/themes/app_colors.dart';
 
+// import '../../../../app/app.bottomsheets.dart';
 import '../../../../app/app.dialogs.dart';
 import '../../../../app/app.logger.dart';
 import '../../../../app/core/custom_base_view_model.dart';
@@ -46,6 +47,10 @@ class HalamanCalegViewModel extends CustomBaseViewModel {
 
   addCaleg() async {
     // log.i('addCaleg');
+    // await bottomSheetService.showCustomSheet(
+    //   variant: BottomSheetType.cobaBottomSheetView,
+    //   title: 'Tambah Caleg',
+    // );
     var res = await dialogService.showCustomDialog(
       variant: DialogType.tambahEditCalegView,
       title: 'Tambah Caleg',

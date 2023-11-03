@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import 'app/app.bottomsheets.dart';
 import 'app/app.dialogs.dart';
 import 'app/app.locator.dart';
 import 'app/app.router.dart';
@@ -10,8 +11,12 @@ import 'app/themes/app_theme.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env");
-  await setupAllLocator();
+  await Future.wait([
+    dotenv.load(fileName: ".env"),
+    setupAllLocator(),
+  ]);
+  // await dotenv.load(fileName: ".env");
+  // await setupAllLocator();
   runApp(const MyApp());
 }
 
@@ -35,6 +40,6 @@ class MyApp extends StatelessWidget {
 Future<void> setupAllLocator() async {
   await setupLocator();
   setupDialogUi();
-  // setupBottomsheetUi();
+  setupBottomSheetUi();
   // setupSnackbarUi();
 }

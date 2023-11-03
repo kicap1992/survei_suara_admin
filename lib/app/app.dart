@@ -1,3 +1,4 @@
+import 'package:cek_suara/ui/views/admin_index_tracking/halaman_caleg/coba_bottom_sheet/coba_bottom_sheet_view.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked/stacked_annotations.dart';
 
@@ -45,6 +46,9 @@ import '../ui/views/splash_screen/splash_screen_view.dart';
   dialogs: [
     StackedDialog(classType: TambahEditCalegView),
     StackedDialog(classType: TambahDetailTimSurveiView)
+  ],
+  bottomsheets: [
+    StackedBottomsheet(classType: CobaBottomSheetView),
   ],
   dependencies: [
     LazySingleton(classType: NavigationService),

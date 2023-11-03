@@ -76,6 +76,71 @@ class TambahDetailTimSurveiView extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     if (model.timSurveiModel == null)
+                      Column(
+                        children: [
+                          const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              '  Pilih Caleg',
+                            ),
+                          ),
+                          if (model.isBusy)
+                            const LinearProgressIndicator(
+                              minHeight: 5,
+                              color: mainColor,
+                            ),
+                          if (!model.isBusy && model.listCalegModel.isNotEmpty)
+                            Container(
+                              width: double.infinity,
+                              height: 60,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                border: Border.all(
+                                  color: sixthGrey,
+                                ),
+                              ),
+                              child: Expanded(
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                      isExpanded: true,
+                                      value: model.selectedCaleg!,
+                                      icon: const Icon(Icons.arrow_drop_down),
+                                      iconSize: 24,
+                                      elevation: 16,
+                                      style:
+                                          const TextStyle(color: Colors.black),
+                                      onChanged: (String? newValue) {
+                                        model.log.i(newValue);
+                                        model.selectedCaleg = newValue!;
+                                        model.selectedCalegId = model
+                                            .listCalegModel
+                                            .firstWhere((element) =>
+                                                element.namaCaleg ==
+                                                model.selectedCaleg)
+                                            .idCaleg;
+
+                                        model.log.i(model.selectedCalegId);
+
+                                        model.notifyListeners();
+                                      },
+                                      items: model.listCalegString
+                                          .map<DropdownMenuItem<String>>(
+                                              (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value,
+                                              overflow: TextOverflow.ellipsis),
+                                        );
+                                      }).toList()),
+                                ),
+                              ),
+                            ),
+                          const SizedBox(height: 20),
+                        ],
+                      ),
+                    if (model.timSurveiModel == null)
                       SizedBox(
                         width: 200,
                         child: MyButton(
@@ -103,45 +168,56 @@ class TambahDetailTimSurveiView extends StatelessWidget {
                         ),
                       ),
                     if (model.timSurveiModel != null)
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
+                      Column(
                         children: [
-                          // create rounde icon with one is delete and one is info
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: mainColor.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.list_alt_outlined,
-                                color: Colors.white,
-                              ),
-                            ),
+                          MyTextFormField(
+                            labelText: 'Caleg',
+                            hintText: 'Caleg',
+                            readOnly: true,
+                            controller: model.namaCalegController,
                           ),
-                          const SizedBox(width: 20),
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: dangerColor,
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: IconButton(
-                              onPressed: () async {
-                                completer(DialogResponse(confirmed: true));
-                              },
-                              icon: const Icon(
-                                Icons.delete,
-                                color: Colors.white,
+                          const SizedBox(height: 20),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              // create rounde icon with one is delete and one is info
+                              Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: mainColor.withOpacity(0.5),
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(
+                                    Icons.list_alt_outlined,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
+                              const SizedBox(width: 20),
+                              Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: dangerColor,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: IconButton(
+                                  onPressed: () async {
+                                    completer(DialogResponse(confirmed: true));
+                                  },
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
                         ],
-                      )
+                      ),
                   ],
                 ),
               ),

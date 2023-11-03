@@ -1,3 +1,4 @@
+import 'package:cek_suara/app/themes/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -84,8 +85,21 @@ class TimSurveiView extends StatelessWidget {
                                             title: Text(
                                               model.listTimSurveiModel[i].nama!,
                                             ),
-                                            subtitle: Text(
-                                              model.listTimSurveiModel[i].nik!,
+                                            subtitle: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  model.listTimSurveiModel[i]
+                                                      .nik!,
+                                                  style: italicTextStyle,
+                                                ),
+                                                Text(
+                                                  model.listTimSurveiModel[i]
+                                                      .namaCaleg!,
+                                                  style: boldTextStyle,
+                                                ),
+                                              ],
                                             ),
                                             trailing: Row(
                                               mainAxisSize: MainAxisSize.min,
