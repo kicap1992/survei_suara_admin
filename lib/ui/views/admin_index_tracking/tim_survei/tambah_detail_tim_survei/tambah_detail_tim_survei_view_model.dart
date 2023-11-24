@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../app/app.bottomsheets.dart';
 import '../../../../../app/app.logger.dart';
 import '../../../../../app/core/custom_base_view_model.dart';
 import '../../../../../model/caleg_model.dart';
@@ -82,5 +83,17 @@ class TambahDetailTimSurveiViewModel extends CustomBaseViewModel {
       easyLoading.dismissLoading();
       setBusy(false);
     }
+  }
+
+  checkSuara(TimSurveiModel timSurveiModel) async {
+    await bottomSheetService.showCustomSheet(
+      data: timSurveiModel.nik,
+      barrierDismissible: true,
+      isScrollControlled: true,
+      title: 'Detail Suara Tim Survei ${timSurveiModel.nama}',
+      description: 'Tim Survei',
+      ignoreSafeArea: false,
+      variant: BottomSheetType.detailSuaraBottomSheetView,
+    );
   }
 }

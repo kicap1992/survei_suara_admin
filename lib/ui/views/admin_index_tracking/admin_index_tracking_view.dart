@@ -26,6 +26,26 @@ class AdminIndexTrackingView extends StatelessWidget {
       ) {
         return SafeArea(
           child: Scaffold(
+            appBar: AppBar(
+              title: Text(
+                model.header,
+                style: const TextStyle(
+                  color: fontColor,
+                  fontSize: 20,
+                ),
+              ),
+              backgroundColor: warningColor,
+              elevation: 0,
+              automaticallyImplyLeading: false,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    model.logout();
+                  },
+                  icon: const Icon(Icons.logout, color: fontColor),
+                ),
+              ],
+            ),
             extendBody: false,
             body: ExtendedNavigator(
               router: AdminIndexTrackingViewRouter(),

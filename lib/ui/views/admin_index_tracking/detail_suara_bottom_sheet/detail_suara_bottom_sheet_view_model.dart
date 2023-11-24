@@ -1,9 +1,8 @@
-import 'package:cek_suara/model/pemilih_model.dart';
-
 import '../../../../app/app.bottomsheets.dart';
 import '../../../../app/app.logger.dart';
 import '../../../../app/core/custom_base_view_model.dart';
 import '../../../../model/my_response.model.dart';
+import '../../../../model/pemilih_model.dart';
 
 class DetailSuaraBottomSheetViewModel extends CustomBaseViewModel {
   final log = getLogger('DetailSuaraBottomSheetViewModel');
@@ -23,13 +22,17 @@ class DetailSuaraBottomSheetViewModel extends CustomBaseViewModel {
     setBusy(true);
 
     try {
-      var response = await httpService.get('caleg/suara/$id');
+      // var response = await httpService.get('caleg/suara/$id');
+      var response = await httpService
+          .get('${status == 'Caleg' ? 'caleg' : 'survei'}/suara/$id');
       MyResponseModel myResponseModel = MyResponseModel.fromJson(response.data);
-      PemilihDetailModel pemilihDetailModel =
-          PemilihDetailModel.fromJson(myResponseModel.data);
+      PemilihDetail pemilihDetail =
+          PemilihDetail.fromJson(myResponseModel.data);
 
-      listPemilih = pemilihDetailModel.pemilihModel!;
-      counter = pemilihDetailModel.jumlah!;
+      log.i(pemilihDetail.pemilihModel!);
+
+      listPemilih = pemilihDetail.pemilihModel!;
+      counter = pemilihDetail.jumlah!;
       this.status = true;
     } catch (e) {
       this.status = false;

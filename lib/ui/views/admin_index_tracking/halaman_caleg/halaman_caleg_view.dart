@@ -47,6 +47,11 @@ class HalamanCalegView extends StatelessWidget {
                     Expanded(
                       // flex: 3,
                       child: Container(
+                        alignment: model.isBusy
+                            ? Alignment.center
+                            : (model.listCalegModel.isNotEmpty
+                                ? Alignment.topCenter
+                                : Alignment.center),
                         height: double.infinity,
                         width: double.infinity,
                         padding: const EdgeInsets.all(10),
@@ -66,9 +71,11 @@ class HalamanCalegView extends StatelessWidget {
                                     : MainAxisAlignment.center),
                             children: [
                               if (model.isBusy)
-                                const LinearProgressIndicator(
-                                  minHeight: 5,
-                                  color: mainColor,
+                                const Center(
+                                  child: LinearProgressIndicator(
+                                    minHeight: 5,
+                                    color: mainColor,
+                                  ),
                                 ),
                               if (!model.isBusy &&
                                   model.listCalegModel.isNotEmpty)

@@ -1,8 +1,8 @@
-import 'package:cek_suara/app/themes/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../../app/themes/app_colors.dart';
+import '../../../../app/themes/app_text.dart';
 import '../../../widgets/top_container.dart';
 import './tim_survei_view_model.dart';
 

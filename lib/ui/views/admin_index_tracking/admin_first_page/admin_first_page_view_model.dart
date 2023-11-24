@@ -1,6 +1,7 @@
+import 'package:cek_suara/model/area_model.dart';
+
 import '../../../../app/app.logger.dart';
 import '../../../../app/core/custom_base_view_model.dart';
-import '../../../../model/area_model.dart';
 import '../../../../model/caleg_model.dart';
 import '../../../../model/my_response.model.dart';
 import '../../../../model/tim_survei_model.dart';
@@ -24,11 +25,11 @@ class AdminFirstPageViewModel extends CustomBaseViewModel {
     setBusy(true);
     globalVar.backPressed = 'cantBack';
     try {
-      var response = await httpService.get('area');
+      var response = await httpService.get('area/kecamatan');
       log.i(response.data);
       MyResponseModel myResponseModel = MyResponseModel.fromJson(response.data);
-      AreaListModel areaListModel =
-          AreaListModel.fromJson(myResponseModel.data);
+      KecamatanDetail areaListModel =
+          KecamatanDetail.fromJson(myResponseModel.data);
       jumlahArea = areaListModel.jumlah!;
 
       response = await httpService.get('caleg');

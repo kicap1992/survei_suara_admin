@@ -1,13 +1,13 @@
 import '../app/app.locator.dart';
 import '../services/other_function.dart';
 
-class PemilihDetailModel {
+class PemilihDetail {
   List<PemilihModel>? pemilihModel;
   int? jumlah;
 
-  PemilihDetailModel({this.pemilihModel, this.jumlah});
+  PemilihDetail({this.pemilihModel, this.jumlah});
 
-  PemilihDetailModel.fromJson(Map<String, dynamic> json) {
+  PemilihDetail.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
       pemilihModel = <PemilihModel>[];
       json['data'].forEach((v) {
@@ -36,7 +36,9 @@ class PemilihModel {
   String? nikTimSurvei;
   String? namaTimSurvei;
   String? namaCaleg;
-  String? namaArea;
+  String? kecamatan;
+  String? kelurahan;
+  int? tps;
   String? createdAt;
 
   PemilihModel(
@@ -46,7 +48,9 @@ class PemilihModel {
       this.nikTimSurvei,
       this.namaTimSurvei,
       this.namaCaleg,
-      this.namaArea,
+      this.kecamatan,
+      this.kelurahan,
+      this.tps,
       this.createdAt});
 
   PemilihModel.fromJson(Map<String, dynamic> json) {
@@ -56,7 +60,9 @@ class PemilihModel {
     nikTimSurvei = json['nik_tim_survei'];
     namaTimSurvei = json['nama_tim_survei'];
     namaCaleg = json['nama_caleg'];
-    namaArea = json['nama_area'];
+    kecamatan = json['kecamatan'];
+    kelurahan = json['kelurahan'];
+    tps = json['tps'];
     createdAt = myFunction.convertDateTime(json['created_at']);
   }
 
@@ -68,7 +74,9 @@ class PemilihModel {
     data['nik_tim_survei'] = nikTimSurvei;
     data['nama_tim_survei'] = namaTimSurvei;
     data['nama_caleg'] = namaCaleg;
-    data['nama_area'] = namaArea;
+    data['kecamatan'] = kecamatan;
+    data['kelurahan'] = kelurahan;
+    data['tps'] = tps;
     data['created_at'] = createdAt;
     return data;
   }

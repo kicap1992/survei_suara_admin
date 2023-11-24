@@ -9,7 +9,6 @@ import '../services/other_function.dart';
 import '../ui/views/admin_index_tracking/admin_first_page/admin_first_page_view.dart';
 import '../ui/views/admin_index_tracking/admin_index_tracking_view.dart';
 import '../ui/views/admin_index_tracking/detail_suara_bottom_sheet/detail_suara_bottom_sheet_view.dart';
-import '../ui/views/admin_index_tracking/halaman_area/halaman_area_view.dart';
 import '../ui/views/admin_index_tracking/halaman_caleg/halaman_caleg_view.dart';
 import '../ui/views/admin_index_tracking/halaman_caleg/tambah_edit_caleg/tambah_edit_caleg_view.dart';
 import '../ui/views/admin_index_tracking/halaman_pengaturan/halaman_pengaturan_view.dart';
@@ -28,9 +27,6 @@ import '../ui/views/splash_screen/splash_screen_view.dart';
         MaterialRoute(
           page: AdminFirstPageView,
           initial: true,
-        ),
-        MaterialRoute(
-          page: HalamanAreaView,
         ),
         MaterialRoute(
           page: HalamanCalegView,

@@ -136,27 +136,39 @@ class TambahEditCalegView extends StatelessWidget {
                         ],
                       ),
                     ),
-                    if (model.calegModel == null) const SizedBox(height: 10),
-                    if (model.calegModel == null)
-                      MyTextFormField(
-                        hintText: 'Area',
-                        labelText: 'Pencarian Area',
-                        controller: model.cariAreaController,
-                        suffixIcon: GestureDetector(
-                          onTap: () {
-                            // remove keyboard focus
-                            FocusScope.of(context).unfocus();
-                            model.cariArea();
-                          },
-                          child: const Icon(Icons.search),
-                        ),
+                    // if (model.calegModel == null) const SizedBox(height: 10),
+                    // if (model.calegModel == null)
+                    //   MyTextFormField(
+                    //     hintText: 'Area',
+                    //     labelText: 'Pencarian Area',
+                    //     controller: model.cariAreaController,
+                    //     // suffixIcon: GestureDetector(
+                    //     //   onTap: () {
+                    //     //     // remove keyboard focus
+                    //     //     FocusScope.of(context).unfocus();
+                    //     //     model.cariArea();
+                    //     //   },
+                    //     //   child: const Icon(Icons.search),
+                    //     // ),
 
-                        // controller: model.partaiController,
-                      ),
-                    const SizedBox(height: 10),
-                    SizedBox(
+                    //     // controller: model.partaiController,
+                    //   ),
+                    const SizedBox(height: 20),
+                    // create a horizontal divider
+
+                    const Text("Pilih Kecamatan"),
+
+                    Container(
                       height: MediaQuery.of(context).size.height * 0.3,
                       width: double.infinity,
+                      // create a border
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
 
                       // create 10 random checkbox
                       child: SingleChildScrollView(
@@ -175,18 +187,19 @@ class TambahEditCalegView extends StatelessWidget {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Checkbox(
-                                        value: model.listAreaId.contains(
-                                            model.listAreaModel[index].idArea!),
+                                        value: model.listAreaId.contains(model
+                                            .listAreaModel[index].kecamatanId!),
                                         onChanged: (value) {
                                           if (model.calegModel != null) return;
                                           model.tambahHapusArea(
-                                            model.listAreaModel[index].idArea!,
+                                            model.listAreaModel[index]
+                                                .kecamatanId!,
                                           );
                                         },
                                       ),
                                       Expanded(
                                         child: Text(
-                                          model.listAreaModel[index].namaArea!,
+                                          model.listAreaModel[index].name!,
                                         ),
                                       ),
                                     ],

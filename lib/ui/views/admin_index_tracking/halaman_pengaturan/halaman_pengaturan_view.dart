@@ -1,7 +1,7 @@
-import 'package:cek_suara/ui/views/admin_index_tracking/admin_first_page/admin_first_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+import '../admin_first_page/admin_first_page_view.dart';
 import './halaman_pengaturan_view_model.dart';
 
 class HalamanPengaturanView extends StatelessWidget {

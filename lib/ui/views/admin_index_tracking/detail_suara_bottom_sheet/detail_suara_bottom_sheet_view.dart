@@ -1,9 +1,9 @@
-import 'package:cek_suara/app/themes/app_colors.dart';
-import 'package:cek_suara/app/themes/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../../../app/themes/app_colors.dart';
+import '../../../../app/themes/app_text.dart';
 import './detail_suara_bottom_sheet_view_model.dart';
 
 class DetailSuaraBottomSheetView extends StatelessWidget {
@@ -88,13 +88,22 @@ class DetailSuaraBottomSheetView extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       if (request!.description == 'Caleg')
-                                        Text(
-                                          model.listPemilih[i].namaTimSurvei!,
-                                          style: italicTextStyle,
-                                        ),
-                                      Text(
-                                        model.listPemilih[i].namaArea!,
-                                      ),
+                                        CardWidget(
+                                            title: 'Tim',
+                                            value: model
+                                                .listPemilih[i].namaTimSurvei!),
+                                      CardWidget(
+                                          title: 'Kec',
+                                          value:
+                                              model.listPemilih[i].kecamatan!),
+                                      CardWidget(
+                                          title: 'Kel / Desa',
+                                          value:
+                                              model.listPemilih[i].kelurahan!),
+                                      CardWidget(
+                                          title: 'TPS',
+                                          value: model.listPemilih[i].tps!
+                                              .toString()),
                                     ],
                                   ),
                                   trailing: IconButton(
@@ -136,6 +145,51 @@ class DetailSuaraBottomSheetView extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class CardWidget extends StatelessWidget {
+  const CardWidget({
+    super.key,
+    required this.title,
+    required this.value,
+  });
+
+  final String title;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 3,
+          child: Text(
+            title,
+            style: italicTextStyle.copyWith(
+              fontSize: 12,
+            ),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        const Expanded(
+          flex: 1,
+          child: Text(
+            ' : ',
+          ),
+        ),
+        Expanded(
+          flex: 6,
+          child: Text(
+            value,
+            style: boldTextStyle.copyWith(
+              fontSize: 12,
+            ),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
     );
   }
 }

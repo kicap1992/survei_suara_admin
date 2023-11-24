@@ -11,13 +11,10 @@ class AdminIndexTrackingViewModel extends IndexTrackingViewModel {
   final log = getLogger('AdminIndexTrackingViewModel');
   final globalVar = locator<GlobalVar>();
   final navigationService = locator<NavigationService>();
+  final dialogService = locator<DialogService>();
+  // final mySharedPrefs = locator<MySharedPrefs>();
 
   final _bottomNavBarList = [
-    {
-      'name': 'Area',
-      'icon': Icons.place_outlined,
-      'header': 'Halaman Area',
-    },
     {
       'name': 'Caleg',
       'icon': Icons.co_present_outlined,
@@ -40,7 +37,6 @@ class AdminIndexTrackingViewModel extends IndexTrackingViewModel {
   List<Map<String, dynamic>> get bottomNavBarList => _bottomNavBarList;
 
   final List<String> _views = [
-    AdminIndexTrackingViewRoutes.halamanAreaView,
     AdminIndexTrackingViewRoutes.halamanCalegView,
     AdminIndexTrackingViewRoutes.timSurveiView,
     AdminIndexTrackingViewRoutes.halamanPengaturanView,
@@ -48,7 +44,7 @@ class AdminIndexTrackingViewModel extends IndexTrackingViewModel {
 
   Future<void> init() async {
     globalVar.backPressed = 'exitApp';
-    setIndex(3);
+    setIndex(2);
     // await super.init();
   }
 
@@ -64,5 +60,21 @@ class AdminIndexTrackingViewModel extends IndexTrackingViewModel {
       _views[index],
       id: 2,
     );
+  }
+
+  logout() async {
+    dialogService
+        .showConfirmationDialog(
+      title: 'Konfirmasi',
+      description: 'Apakah anda yakin ingin keluar?',
+      cancelTitle: 'Batal',
+      confirmationTitle: 'Keluar',
+    )
+        .then((value) async {
+      if (value!.confirmed) {
+        // await mySharedPrefs.clear();
+        navigationService.clearStackAndShow(Routes.loginScreenView);
+      }
+    });
   }
 }

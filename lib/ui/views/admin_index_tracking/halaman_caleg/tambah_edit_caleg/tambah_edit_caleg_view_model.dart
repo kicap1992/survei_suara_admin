@@ -19,15 +19,15 @@ class TambahEditCalegViewModel extends CustomBaseViewModel {
   final log = getLogger('TambahEditCalegViewModel');
 
   // variabel list area
-  List<AreaModel> listAreaModel = [];
-  List<AreaModel> allListAreaModel = [];
+  List<KecamatanModel> listAreaModel = [];
+  List<KecamatanModel> allListAreaModel = [];
 
   // form variable
   final formKey = GlobalKey<FormState>();
   TextEditingController namaController = TextEditingController();
   TextEditingController cariAreaController = TextEditingController();
   TextEditingController nomorUrutController = TextEditingController();
-  List<int> listAreaId = [];
+  List<String> listAreaId = [];
 
   // image picker
   String? _imagePath;
@@ -58,13 +58,13 @@ class TambahEditCalegViewModel extends CustomBaseViewModel {
       var response = await httpService.get('caleg/relasi_area/$idCaleg');
       log.i(response.data);
       MyResponseModel myResponseModel = MyResponseModel.fromJson(response.data);
-      var data = myResponseModel.data['area'];
+      var data = myResponseModel.data['kecamatan'];
       for (var item in data) {
-        listAreaId.add(item['id_area']);
+        listAreaId.add(item['kecamatan_id']);
       }
       listAreaModel = [];
       for (var item in allListAreaModel) {
-        if (listAreaId.contains(item.idArea)) {
+        if (listAreaId.contains(item.kecamatanId)) {
           listAreaModel.add(item);
         }
       }
@@ -85,16 +85,19 @@ class TambahEditCalegViewModel extends CustomBaseViewModel {
     setBusy(true);
     globalVar.backPressed = 'cantBack';
     try {
-      var response = await httpService.get('area');
+      var response = await httpService.get('area/kecamatan');
       log.i(response.data);
       MyResponseModel myResponseModel = MyResponseModel.fromJson(response.data);
-      AreaListModel areaListModel =
-          AreaListModel.fromJson(myResponseModel.data);
-      listAreaModel = areaListModel.area!;
-      allListAreaModel = areaListModel.area!;
+      // log.i(myResponseModel.data);
+      KecamatanDetail areaListModel =
+          KecamatanDetail.fromJson(myResponseModel.data);
+      listAreaModel = areaListModel.kecamatan!;
+      allListAreaModel = areaListModel.kecamatan!;
+      // listAreaModel = areaListModel.area!;
+      // allListAreaModel = areaListModel.area!;
       // jumlahArea = areaListModel.jumlah!;
 
-      log.i('listAreaModel: $listAreaModel');
+      // log.i('listAreaModel: $listAreaModel');
       // log.i('jumlahArea: $jumlahArea');
     } catch (e) {
       log.e(e);
@@ -120,33 +123,33 @@ class TambahEditCalegViewModel extends CustomBaseViewModel {
     }
   }
 
-  tambahHapusArea(int idArea) {
+  tambahHapusArea(String kecamatanId) {
     log.i('tambahHapusArea');
-    if (listAreaId.contains(idArea)) {
-      listAreaId.remove(idArea);
+    if (listAreaId.contains(kecamatanId)) {
+      listAreaId.remove(kecamatanId);
     } else {
-      listAreaId.add(idArea);
+      listAreaId.add(kecamatanId);
     }
 
     notifyListeners();
   }
 
-  cariArea() {
-    log.i('cariArea ${cariAreaController.text}');
+  // cariArea() {
+  //   log.i('cariArea ${cariAreaController.text}');
 
-    if (cariAreaController.text.isEmpty) {
-      listAreaModel = allListAreaModel;
-      return;
-    }
+  //   if (cariAreaController.text.isEmpty) {
+  //     listAreaModel = allListAreaModel;
+  //     return;
+  //   }
 
-    listAreaModel = allListAreaModel
-        .where((element) => element.namaArea!
-            .toLowerCase()
-            .contains(cariAreaController.text.toLowerCase()))
-        .toList();
+  //   listAreaModel = allListAreaModel
+  //       .where((element) => element.namaArea!
+  //           .toLowerCase()
+  //           .contains(cariAreaController.text.toLowerCase()))
+  //       .toList();
 
-    notifyListeners();
-  }
+  //   notifyListeners();
+  // }
 
   Future<bool> addCaleg() async {
     log.i('addCaleg');
@@ -157,7 +160,7 @@ class TambahEditCalegViewModel extends CustomBaseViewModel {
     var formData = FormData.fromMap({
       'nama': namaController.text,
       'nomor_urut': nomorUrutController.text,
-      'area': const JsonEncoder().convert(listAreaId),
+      'kecamatan': const JsonEncoder().convert(listAreaId),
       'foto': await MultipartFile.fromFile(
         imageFile!.path,
         filename: imageFile!.name,

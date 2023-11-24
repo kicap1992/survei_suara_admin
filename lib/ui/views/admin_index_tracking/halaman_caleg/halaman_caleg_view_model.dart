@@ -1,9 +1,7 @@
-import 'package:cek_suara/app/themes/app_colors.dart';
-
-// import '../../../../app/app.bottomsheets.dart';
 import '../../../../app/app.dialogs.dart';
 import '../../../../app/app.logger.dart';
 import '../../../../app/core/custom_base_view_model.dart';
+import '../../../../app/themes/app_colors.dart';
 import '../../../../model/caleg_model.dart';
 import '../../../../model/my_response.model.dart';
 
@@ -58,7 +56,8 @@ class HalamanCalegViewModel extends CustomBaseViewModel {
 
     if (res!.confirmed) {
       snackbarService.showSnackbar(
-        message: 'Caleg berhasil ditambahkan',
+        message:
+            'Caleg berhasil ditambahkan\nPassword default caleg : 12345678',
         title: 'Berhasil',
         duration: const Duration(seconds: 3),
       );

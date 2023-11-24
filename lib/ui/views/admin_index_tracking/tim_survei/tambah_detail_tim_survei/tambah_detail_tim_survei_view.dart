@@ -76,71 +76,70 @@ class TambahDetailTimSurveiView extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     if (model.timSurveiModel == null)
-                      Column(
-                        children: [
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              '  Pilih Caleg',
-                            ),
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '  Pilih Caleg',
+                        ),
+                      ),
+                    if (model.isBusy && model.timSurveiModel == null)
+                      const LinearProgressIndicator(
+                        minHeight: 5,
+                        color: mainColor,
+                      ),
+                    if (!model.isBusy && model.listCalegModel.isNotEmpty)
+                      Container(
+                        width: double.infinity,
+                        height: 60,
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          border: Border.all(
+                            color: sixthGrey,
                           ),
-                          if (model.isBusy)
-                            const LinearProgressIndicator(
-                              minHeight: 5,
-                              color: mainColor,
-                            ),
-                          if (!model.isBusy && model.listCalegModel.isNotEmpty)
-                            Container(
-                              width: double.infinity,
-                              height: 60,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                border: Border.all(
-                                  color: sixthGrey,
-                                ),
-                              ),
-                              child: Expanded(
-                                child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<String>(
-                                      isExpanded: true,
-                                      value: model.selectedCaleg!,
-                                      icon: const Icon(Icons.arrow_drop_down),
-                                      iconSize: 24,
-                                      elevation: 16,
-                                      style:
-                                          const TextStyle(color: Colors.black),
-                                      onChanged: (String? newValue) {
-                                        model.log.i(newValue);
-                                        model.selectedCaleg = newValue!;
-                                        model.selectedCalegId = model
-                                            .listCalegModel
-                                            .firstWhere((element) =>
-                                                element.namaCaleg ==
-                                                model.selectedCaleg)
-                                            .idCaleg;
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                              isExpanded: true,
+                              value: model.selectedCaleg!,
+                              icon: const Icon(Icons.arrow_drop_down),
+                              iconSize: 24,
+                              elevation: 16,
+                              style: const TextStyle(color: Colors.black),
+                              onChanged: (String? newValue) {
+                                model.log.i(newValue);
+                                model.selectedCaleg = newValue!;
+                                model.selectedCalegId = model.listCalegModel
+                                    .firstWhere((element) =>
+                                        element.namaCaleg ==
+                                        model.selectedCaleg)
+                                    .idCaleg;
 
-                                        model.log.i(model.selectedCalegId);
+                                model.log.i(model.selectedCalegId);
 
-                                        model.notifyListeners();
-                                      },
-                                      items: model.listCalegString
-                                          .map<DropdownMenuItem<String>>(
-                                              (String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value,
-                                              overflow: TextOverflow.ellipsis),
-                                        );
-                                      }).toList()),
-                                ),
-                              ),
-                            ),
-                          const SizedBox(height: 20),
-                        ],
+                                model.notifyListeners();
+                              },
+                              items: model.listCalegString
+                                  .map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value,
+                                      overflow: TextOverflow.ellipsis),
+                                );
+                              }).toList()),
+                        ),
                       ),
                     if (model.timSurveiModel == null)
+                      const SizedBox(height: 20),
+                    // Column(
+                    //   mainAxisSize: MainAxisSize.min,
+                    //   children: [
+
+                    //   ],
+                    // ),
+                    if (model.timSurveiModel == null &&
+                        request.title! == 'Tambah Tim Survei')
                       SizedBox(
                         width: 200,
                         child: MyButton(
@@ -169,6 +168,7 @@ class TambahDetailTimSurveiView extends StatelessWidget {
                       ),
                     if (model.timSurveiModel != null)
                       Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           MyTextFormField(
                             labelText: 'Caleg',
@@ -185,11 +185,13 @@ class TambahDetailTimSurveiView extends StatelessWidget {
                                 width: 50,
                                 height: 50,
                                 decoration: BoxDecoration(
-                                  color: mainColor.withOpacity(0.5),
+                                  color: mainColor,
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                                 child: IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    model.checkSuara(model.timSurveiModel!);
+                                  },
                                   icon: const Icon(
                                     Icons.list_alt_outlined,
                                     color: Colors.white,

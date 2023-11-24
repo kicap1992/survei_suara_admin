@@ -41,62 +41,83 @@ class DetailSuaraPemilihBottomSheetView extends StatelessWidget {
                 topRight: Radius.circular(16.0),
               ),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  request.title!,
-                  style: boldTextStyle.copyWith(
-                    fontSize: 16,
-                    color: fontColor,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    request.title!,
+                    style: boldTextStyle.copyWith(
+                      fontSize: 16,
+                      color: fontColor,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 15),
-                Container(
-                  height: 100,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    color: mainColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      model.showImage(
-                        context,
-                        dotenv.env['url']! + request.data!.img!,
-                      );
-                    },
-                    child: ClipRRect(
+                  const SizedBox(height: 15),
+                  Container(
+                    height: 100,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      color: mainColor,
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        dotenv.env['url']! + request.data!.img!,
-                        fit: BoxFit.fill,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Center(
-                            child: Icon(
-                              Icons.error,
-                              color: backgroundColor,
-                              size: 50,
-                            ),
-                          );
-                        },
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        model.showImage(
+                          context,
+                          dotenv.env['url']! + request.data!.img!,
+                        );
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          dotenv.env['url']! + request.data!.img!,
+                          fit: BoxFit.fill,
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Center(
+                              child: Icon(
+                                Icons.error,
+                                color: backgroundColor,
+                                size: 50,
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
-                ),
-                _DetailChildWidget(
-                  title: 'Nama',
-                  value: request.data!.namaPemilih!,
-                ),
-                _DetailChildWidget(
-                  title: 'No KTP /\nNo HP',
-                  value: request.data!.nikNomorHp!,
-                ),
-                _DetailChildWidget(
-                  title: 'Tanggal/\nWaktu',
-                  value: request.data!.createdAt!,
-                ),
-              ],
+                  _DetailChildWidget(
+                    title: 'Nama',
+                    value: request.data!.namaPemilih!,
+                  ),
+                  _DetailChildWidget(
+                    title: 'No KTP /\nNo HP',
+                    value: request.data!.nikNomorHp!,
+                  ),
+                  _DetailChildWidget(
+                    title: 'Tanggal/\nWaktu',
+                    value: model.myFunction
+                        .convertDateTime2(request.data!.createdAt!),
+                  ),
+                  _DetailChildWidget(
+                      title: 'Caleg', value: request.data!.namaCaleg!),
+                  _DetailChildWidget(
+                    title: 'Tim Survei',
+                    value: request.data!.namaTimSurvei!,
+                  ),
+                  _DetailChildWidget(
+                    title: 'Kecamatan',
+                    value: request.data!.kecamatan!,
+                  ),
+                  _DetailChildWidget(
+                    title: 'Kelurahan',
+                    value: request.data!.kelurahan!,
+                  ),
+                  _DetailChildWidget(
+                    title: 'TPS',
+                    value: request.data!.tps!.toString(),
+                  ),
+                ],
+              ),
             ),
           ),
         );
