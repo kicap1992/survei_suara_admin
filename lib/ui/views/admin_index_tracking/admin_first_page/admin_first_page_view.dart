@@ -60,9 +60,9 @@ class AdminFirstPageView extends StatelessWidget {
                         background: orangeColor,
                       ),
                       const SizedBox(height: 10),
-                      const TopContainer(
+                      TopContainer(
                         title: 'Jumlah\nPemilih',
-                        value: '10 Pemilih',
+                        value: '${model.jumlahPemilih} Pemilih',
                         icon: Icons.people_alt_outlined,
                         background: blueColor,
                       ),
